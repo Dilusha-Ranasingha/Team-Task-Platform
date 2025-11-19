@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { Router } from "express";
 import { UserController } from "../controllers/UserController";
 import { RegisterUserUseCase } from "../../application/use-cases/RegisterUserUseCase";
