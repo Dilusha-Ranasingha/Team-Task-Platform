@@ -20,7 +20,7 @@ export class UserController {
     } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
-  };
+  }; 
 
   login = async (req: Request, res: Response) => {
     try {
