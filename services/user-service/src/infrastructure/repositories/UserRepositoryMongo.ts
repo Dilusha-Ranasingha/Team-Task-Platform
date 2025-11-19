@@ -5,7 +5,7 @@ import { UserModel } from "../db/models/UserModel";
 export class UserRepositoryMongo implements IUserRepository {
   async create(user: User): Promise<User> {
     const createdUser = await UserModel.create({
-      email: user.email,
+      email: user.email, 
       passwordHash: user.passwordHash,
     });
 
