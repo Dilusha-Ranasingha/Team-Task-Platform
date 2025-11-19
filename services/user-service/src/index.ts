@@ -7,7 +7,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// TEMP: test route
+// TEMP: test route 
 app.get("/", (req, res) => {
   res.send("User Service Running");
 });
