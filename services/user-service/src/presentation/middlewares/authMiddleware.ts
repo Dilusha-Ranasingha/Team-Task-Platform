@@ -9,8 +9,10 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
       return res.status(401).json({ error: "Unauthorized" });
     }
 
+    //Extract the token from "Bearer TOKEN"
     const token = authHeader.split(" ")[1];
 
+    //Verify the token using JWT_SECRET
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
 
     (req as any).userId = decoded.id;
