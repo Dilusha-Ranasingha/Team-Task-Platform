@@ -1,3 +1,4 @@
+import { eventBus } from "../../eventBus";
 import { IUserRepository } from "../../domain/repositories/IUserRepository";
 import { IPasswordHasher } from "../interfaces/IPasswordHasher";
 import { User } from "../../domain/entities/User";
@@ -19,6 +20,11 @@ export class RegisterUserUseCase {
     const user = new User(null, email, passwordHash);
 
     const savedUser = await this.userRepo.create(user);
+
+    eventBus.emit("USER_CREATED", {           // EMIT THE EVENT HERE NOTIFIYING THAT A NEW USER HAS BEEN REGISTERED
+      userId: savedUser.id,
+      email: savedUser.email
+    });
 
     return {
       id: savedUser.id,
