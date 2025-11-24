@@ -1,4 +1,4 @@
-import { eventBus } from "../../eventBus";
+import axios from "axios";
 import { ITaskRepository } from "../../domain/repositories/ITaskRepository";
 
 export class AssignTaskUseCase {
@@ -14,9 +14,9 @@ export class AssignTaskUseCase {
 
     const updatedTask = await this.taskRepo.update(task);
 
-    eventBus.emit("TASK_ASSIGNED", {          // EMIT THE EVENT HERE NOTIFIYING THAT A TASK HAS BEEN ASSIGNED
-      taskId: updatedTask.id,
+    await axios.post("http://localhost:3003/notifications/internal", {
       userId: updatedTask.assignedTo,
+      message: `You were assigned a task: ${updatedTask.title}`
     });
 
     return updatedTask;

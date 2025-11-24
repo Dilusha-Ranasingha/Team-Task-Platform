@@ -1,4 +1,4 @@
-import { eventBus } from "../../eventBus";
+import axios from "axios";
 import { ITaskRepository } from "../../domain/repositories/ITaskRepository";
 import { Task } from "../../domain/entities/Task";
 
@@ -16,9 +16,9 @@ export class CreateTaskUseCase {
 
     const savedTask = await this.taskRepo.create(task);
 
-    eventBus.emit("TASK_CREATED", {           // EMIT THE EVENT HERE NOTIFIYING THAT A NEW TASK HAS BEEN CREATED
-      taskId: savedTask.id,
-      title: savedTask.title
+    await axios.post("http://localhost:3003/notifications/internal", {
+      userId: "system",
+      message: `New task created: ${savedTask.title}`
     });
 
     return savedTask;
