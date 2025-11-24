@@ -1,3 +1,4 @@
+import { eventBus } from "../../eventBus";
 import { ITaskRepository } from "../../domain/repositories/ITaskRepository";
 import { Task } from "../../domain/entities/Task";
 
@@ -13,6 +14,13 @@ export class CreateTaskUseCase {
       "TODO"
     );
 
-    return await this.taskRepo.create(task);
+    const savedTask = await this.taskRepo.create(task);
+
+    eventBus.emit("TASK_CREATED", {           // EMIT THE EVENT HERE NOTIFIYING THAT A NEW TASK HAS BEEN CREATED
+      taskId: savedTask.id,
+      title: savedTask.title
+    });
+
+    return savedTask;
   }
 }
