@@ -1,3 +1,4 @@
+import { eventBus } from "../../eventBus";
 import { ITaskRepository } from "../../domain/repositories/ITaskRepository";
 
 export class AssignTaskUseCase {
@@ -11,6 +12,13 @@ export class AssignTaskUseCase {
 
     task.assignedTo = userId;
 
-    return await this.taskRepo.update(task);
+    const updatedTask = await this.taskRepo.update(task);
+
+    eventBus.emit("TASK_ASSIGNED", {          // EMIT THE EVENT HERE NOTIFIYING THAT A TASK HAS BEEN ASSIGNED
+      taskId: updatedTask.id,
+      userId: updatedTask.assignedTo,
+    });
+
+    return updatedTask;
   }
 }
