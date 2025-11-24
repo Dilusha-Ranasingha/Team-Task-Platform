@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import "./infrastructure/events/listeners";
 import { connectDB } from "./infrastructure/db/mongoose";
 import notificationRoutes from "./presentation/routes/notificationRoutes";
 
