@@ -1,4 +1,4 @@
-import { eventBus } from "../../eventBus";
+import axios from "axios";
 import { IUserRepository } from "../../domain/repositories/IUserRepository";
 import { IPasswordHasher } from "../interfaces/IPasswordHasher";
 import { User } from "../../domain/entities/User";
@@ -21,9 +21,9 @@ export class RegisterUserUseCase {
 
     const savedUser = await this.userRepo.create(user);
 
-    eventBus.emit("USER_CREATED", {           // EMIT THE EVENT HERE NOTIFIYING THAT A NEW USER HAS BEEN REGISTERED
+    await axios.post("http://localhost:3003/notifications/internal", {
       userId: savedUser.id,
-      email: savedUser.email
+      message: `Welcome ${savedUser.email}!`
     });
 
     return {
