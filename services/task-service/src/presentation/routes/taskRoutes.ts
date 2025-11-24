@@ -8,6 +8,8 @@ import { ListTasksUseCase } from "../../application/use-cases/ListTasksUseCase";
 
 import { TaskController } from "../controllers/TaskController";
 
+import { authMiddleware } from "../middlewares/authMiddleware";
+
 const router = Router();
 
 // Dependency Injection setup
@@ -24,8 +26,8 @@ const taskController = new TaskController(
 );
 
 // Routes
-router.post("/", taskController.create);
-router.patch("/assign", taskController.assign);
-router.get("/", taskController.listAll);
+router.post("/", authMiddleware,  taskController.create);
+router.patch("/assign", authMiddleware,  taskController.assign);
+router.get("/", authMiddleware,  taskController.listAll);
 
 export default router;
