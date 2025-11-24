@@ -13,8 +13,9 @@ export class TaskController {
   create = async (req: Request, res: Response) => {
     try {
       const { title, description } = req.body;
+      const userId = (req as any).userId;
 
-      const result = await this.createTask.execute(title, description);
+      const result = await this.createTask.execute(title, description, userId);
 
       res.status(201).json(result);
     } catch (error: any) {
