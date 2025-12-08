@@ -1,11 +1,16 @@
+import { Toaster, toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-function App() {
-
+export default function App() {
   return (
-    <h1 className="text-xl font-bold text-blue-500">
-      Tailwind v4 is working 🎉
-    </h1>
+    <>
+      <Toaster richColors position="top-center" />
+
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <Button onClick={() => toast.success("Shadcn + Sonner working!")}>
+          Test Notifications 🎉
+        </Button>
+      </div>
+    </>
   );
 }
-
-export default App
