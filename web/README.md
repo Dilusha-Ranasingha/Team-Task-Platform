@@ -1,73 +1,56 @@
-# React + TypeScript + Vite
+# Tailwind CSS setup (v3.3.3) with PostCSS and tailwindcss-animate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is configured to use Tailwind CSS 3.3.3 with PostCSS, Autoprefixer, and the tailwindcss-animate plugin.
 
-Currently, two official plugins are available:
+## What changed
+- Removed: tailwindcss and @tailwindcss/postcss.
+- Installed: tailwindcss@3.3.3, postcss, autoprefixer.
+- Initialized config: tailwind.config.js and postcss.config.js.
+- Added plugin: tailwindcss-animate.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Install or reproduce
+```bash
+# Remove previous packages (if present)
+npm uninstall tailwindcss @tailwindcss/postcss
 
-## React Compiler
+# Install Tailwind 3.3.3 with PostCSS and Autoprefixer
+npm install -D tailwindcss@3.3.3 postcss autoprefixer
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Create config files(that create tailwind.config.js and postcss.config.js files)
+npx tailwindcss init -p
 
-## Expanding the ESLint configuration
+# Install animation plugin (prefer dev dependency)
+npm install -D tailwindcss-animate
+```
+Note: If you installed tailwindcss-animate both as prod and dev, keep one (dev is recommended) and remove the other.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
+## Configure Tailwind
+tailwind.config.js (adjust content paths to your project):
 ```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx,html}", "./index.html"],
+  theme: {
+    extend: {},
   },
-])
+  plugins: [require("tailwindcss-animate")],
+};
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
+postcss.config.js:
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
   },
-])
+};
+```
+
+Create your CSS entry (e.g., src/index.css):
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* tailwindcss-animate adds utility classes automatically */
 ```
