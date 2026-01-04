@@ -54,4 +54,4 @@ Create your CSS entry (e.g., src/index.css):
 @tailwind utilities;
 /* tailwindcss-animate adds utility classes automatically */
 ```
-# This commite make the edit commite  check
+# This commite make the edit commite
